@@ -14,6 +14,8 @@ Script Purpose:
 -- 1. Load Calendar Data
 -- Ingests calendar date definitions into the bronze.calendar table.
 -- ============================================================================
+TRUNCATE TABLE bronze.calendar;
+
 COPY bronze.calendar
 FROM 'D:/Data Analysis/1_SQL/dwh_project/sql-data-warehouse-project1/datasets/calendar.csv'
 WITH (
@@ -26,6 +28,8 @@ WITH (
 -- 2. Load Customer Data
 -- Ingests raw customer profile and membership details into bronze.customers.
 -- ============================================================================
+TRUNCATE TABLE bronze.customers;
+
 COPY bronze.customers
 FROM 'D:/Data Analysis/1_SQL/dwh_project/sql-data-warehouse-project1/datasets/customers.csv'
 WITH (
@@ -38,6 +42,8 @@ WITH (
 -- 3. Load Product Catalog Data
 -- Ingests product descriptions, categories, and attributes into bronze.products.
 -- ============================================================================
+TRUNCATE TABLE bronze.products;
+
 COPY bronze.products
 FROM 'D:/Data Analysis/1_SQL/dwh_project/sql-data-warehouse-project1/datasets/products.csv'
 WITH (
@@ -50,6 +56,8 @@ WITH (
 -- 4. Load Store Metadata
 -- Ingests physical and online store location details into bronze.stores.
 -- ============================================================================
+TRUNCATE TABLE bronze.stores;
+
 COPY bronze.stores
 FROM 'D:/Data Analysis/1_SQL/dwh_project/sql-data-warehouse-project1/datasets/stores.csv'
 WITH (
@@ -63,6 +71,8 @@ WITH (
 -- Ingests transactional sales records into bronze.sales.
 -- Executed last to ensure foreign key entities (products, stores, customers) exist.
 -- ============================================================================
+TRUNCATE TABLE bronze.sales;
+
 COPY bronze.sales
 FROM 'D:/Data Analysis/1_SQL/dwh_project/sql-data-warehouse-project1/datasets/sales.csv'
 WITH (

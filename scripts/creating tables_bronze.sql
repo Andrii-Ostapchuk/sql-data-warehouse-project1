@@ -82,9 +82,6 @@ CREATE TABLE bronze.sales (
   order_id VARCHAR(12) PRIMARY KEY,
   order_date DATE,
   product_id VARCHAR(6),
-  CONSTRAINT fk_sales_products
-    FOREIGN KEY (product_id) 
-    REFERENCES bronze.products(product_id),
   store_id VARCHAR(5), 
   CONSTRAINT fk_sales_stores
     FOREIGN KEY (store_id)

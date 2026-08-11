@@ -1,6 +1,6 @@
 /*
 ===============================================================================
-Data Ingestion Script: Bronze Layer Bulk Load (with Execution Timing)
+Data Ingestion Script for Stored Procedure: Bronze Layer Bulk Load (with Execution Timing)
 ===============================================================================
 Script Purpose:
     - Populates raw Bronze layer tables by bulk importing data from CSV source files.

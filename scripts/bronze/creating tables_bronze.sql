@@ -12,88 +12,61 @@ Script Purpose:
 ===============================================================================
 */
 
--- ============================================================================
--- 1. Calendar Dimension Table
--- Stores date breakdown fields for time-series aggregation and filtering.
--- ============================================================================
-DROP TABLE IF EXISTS bronze.calendar;
 
-CREATE TABLE bronze.calendar (
-  date DATE,
-  year INT,
-  month INT,
-  day INT,
-  week INT,
-  day_of_week INT
+DROP TABLE IF EXISTS bronze.olist_customers_dataset;
+
+CREATE TABLE bronze.olist_customers_dataset (
+  customer_id VARCHAR(50),
+  customer_unique_id VARCHAR(50),
+  customer_zip_code_prefix VARCHAR(10),
+  customer_city VARCHAR(20),
+  customer_state VARCHAR(2)
 );
 
--- ============================================================================
--- 2. Customers Dimension Table
--- Customer profile data including demographics and membership details.
--- ============================================================================
-DROP TABLE IF EXISTS bronze.customers;
 
-CREATE TABLE bronze.customers (
-  customer_id VARCHAR(10) PRIMARY KEY,
-  age INT,
-  gender VARCHAR(8),
-  loyalty_member BOOLEAN,
-  join_date DATE
+DROP TABLE IF EXISTS bronze.olist_geolocation_dataset;
+
+CREATE TABLE bronze.olist_geolocation_dataset (
+  geolocation_zip_code_prefix VARCHAR(5),
+  geolocation_lat FLOAT,
+  geolocation_lng FLOAT,
+  geolocation_city VARCHAR(20),
+  geolocation_state VARCHAR(2)
 );
 
--- ============================================================================
--- 3. Products Dimension Table
--- Product catalog containing item classifications and specifications.
--- ============================================================================
-DROP TABLE IF EXISTS bronze.products;
 
-CREATE TABLE bronze.products (
-  product_id VARCHAR(6) PRIMARY KEY,
-  product_name VARCHAR(30),
-  brand VARCHAR(10),
-  category VARCHAR(10),
-  cocoa_percent INT,
-  weight_g INT
+DROP TABLE IF EXISTS bronze.olist_order_items_dataset;
+
+CREATE TABLE bronze.olist_order_items_dataset (
+  order_id VARCHAR(50),
+  order_item_id INT,
+  product_id VARCHAR(50),
+  seller_id VARCHAR(50),
+  shipping_limit_date DATE,
+  price FLOAT,
+  freight_value FLOAT
 );
 
--- ============================================================================
--- 4. Stores Dimension Table
--- Store entity metadata including geographical locations and store types.
--- ============================================================================
-DROP TABLE IF EXISTS bronze.stores;
 
-CREATE TABLE bronze.stores (
-  store_id VARCHAR(5) PRIMARY KEY,
-  store_name VARCHAR(20),
-  city VARCHAR(20),
-  country VARCHAR(20),
-  store_type VARCHAR(10)
+DROP TABLE IF EXISTS bronze.olist_order_payments_dataset;
+
+CREATE TABLE bronze.olist_order_payments_dataset (
+  order_id VARCHAR(50),
+  payment_sequential INT,
+  payment_type VARCHAR(10),
+  payment_installments INT,
+  payment_value FLOAT
 );
 
--- ============================================================================
--- 5. Sales Fact Table
--- Transactional line items containing financial metrics and operational metrics.
--- Foreign keys link each sales record to products, stores, and customers.
--- Must be created AFTER the referenced dimension tables are defined.
--- ============================================================================
-DROP TABLE IF EXISTS bronze.sales;
 
-CREATE TABLE bronze.sales (
-  order_id VARCHAR(12) PRIMARY KEY,
-  order_date DATE,
-  product_id VARCHAR(6),
-  store_id VARCHAR(5), 
-  CONSTRAINT fk_sales_stores
-    FOREIGN KEY (store_id)
-    REFERENCES bronze.stores(store_id),
-  customer_id VARCHAR(10),
-  CONSTRAINT fk_sales_customers
-    FOREIGN KEY (customer_id)
-    REFERENCES bronze.customers(customer_id),
-  quantity INT,
-  unit_price FLOAT,
-  discount FLOAT,
-  revenue FLOAT,
-  cost FLOAT,
-  profit FLOAT
+DROP TABLE IF EXISTS bronze.olist_order_reviews_dataset;
+
+CREATE TABLE bronze.olist_order_reviews_dataset (
+  review_id VARCHAR(50),
+  order_id VARCHAR(50),
+  review_score INT,
+  review_comment_title VARCHAR(50),
+  review_comment_message TEXT,
+  review_creation_date DATE,
+  review_answer_timestamp DATE
 );

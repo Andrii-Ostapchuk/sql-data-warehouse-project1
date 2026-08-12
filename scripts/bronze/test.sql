@@ -3,6 +3,10 @@ FROM bronze.olist_customers_dataset
 LIMIT 1000;
 
 SELECT *
+FROM bronze.olist_customers_dataset
+LIMIT 1000;
+
+SELECT *
 FROM bronze.olist_geolocation_dataset
 LIMIT 1000;
 

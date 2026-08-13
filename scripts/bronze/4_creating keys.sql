@@ -1,3 +1,56 @@
+/*===============================================================================
+Script: Drop All Primary Keys and Foreign Keys
+===============================================================================*/
+
+-- 1. Drop Foreign Keys First (Child tables must be dropped before dropping parent Primary Keys)
+
+-- Table: bronze.olist_order_items_dataset
+ALTER TABLE bronze.olist_order_items_dataset
+  DROP CONSTRAINT IF EXISTS fk_olist_order_items_dataset__olist_orders_dataset,
+  DROP CONSTRAINT IF EXISTS fk_olist_order_items_dataset__olist_products_dataset,
+  DROP CONSTRAINT IF EXISTS fk_olist_order_items_dataset__olist_sellers_dataset;
+
+-- Table: bronze.olist_order_payments_dataset
+ALTER TABLE bronze.olist_order_payments_dataset
+  DROP CONSTRAINT IF EXISTS fk_olist_order_payments_dataset__olist_orders_dataset;
+
+-- Table: bronze.olist_order_reviews_dataset
+ALTER TABLE bronze.olist_order_reviews_dataset
+  DROP CONSTRAINT IF EXISTS fk_olist_order_reviews_dataset__olist_orders_dataset;
+
+-- Table: bronze.olist_orders_dataset
+ALTER TABLE bronze.olist_orders_dataset
+  DROP CONSTRAINT IF EXISTS fk_olist_orders_dataset__olist_customers_dataset;
+
+-- Table: bronze.olist_products_dataset
+ALTER TABLE bronze.olist_products_dataset
+  DROP CONSTRAINT IF EXISTS fk_olist_products_dataset__product_category_name_translation;
+
+
+-- 2. Drop Primary Keys
+
+-- Table: bronze.olist_customers_dataset
+ALTER TABLE bronze.olist_customers_dataset
+  DROP CONSTRAINT IF EXISTS pk_olist_customers_dataset;
+
+-- Table: bronze.olist_orders_dataset
+ALTER TABLE bronze.olist_orders_dataset
+  DROP CONSTRAINT IF EXISTS pk_olist_orders_dataset;
+
+-- Table: bronze.olist_products_dataset
+ALTER TABLE bronze.olist_products_dataset
+  DROP CONSTRAINT IF EXISTS pk_olist_products_dataset;
+
+-- Table: bronze.olist_sellers_dataset
+ALTER TABLE bronze.olist_sellers_dataset
+  DROP CONSTRAINT IF EXISTS pk_olist_sellers_dataset;
+
+-- Table: bronze.product_category_name_translation
+ALTER TABLE bronze.product_category_name_translation
+  DROP CONSTRAINT IF EXISTS pk_product_category_name_translation;
+
+
+
 /*================
 PRIMARY KEYS
 ================*/
@@ -88,17 +141,4 @@ ALTER TABLE bronze.olist_products_dataset
 
 
 
--- Checking for unmatched values
-SELECT DISTINCT
-  p.product_category_name product,
-  t.product_category_name translation
-FROM bronze.olist_products_dataset p
-FULL JOIN bronze.product_category_name_translation t 
-ON t.product_category_name = p.product_category_name;
-
--- Adding missing values
-INSERT INTO bronze.product_category_name_translation (product_category_name, product_category_name_english)
-VALUES 
-    ('pc_gamer', 'pc_gamer'),
-    ('portateis_cozinha_e_preparadores_de_alimentos', 'portable_kitchen_and_food_preparers')
 

@@ -98,6 +98,7 @@ ALTER TABLE silver.olist_geolocation_dataset
 FOREIGN KEYS
 ================*/
 
+
 -- olist_order_items_dataset
 
 ALTER TABLE silver.olist_order_items_dataset

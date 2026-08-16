@@ -1,3 +1,6 @@
+
+SELECT order_id, order_item_id, COUNT(*)
+FROM(
 WITH deduplicated_reviews AS (
     SELECT DISTINCT ON (order_id)
         order_id,
@@ -74,6 +77,7 @@ LEFT JOIN deduplicated_reviews r
     ON o.order_id = r.order_id
 
 WHERE o.is_valid_date_sequence IS TRUE
-  AND p.physical_dimentions_integrity IS TRUE;
-
-/* ADD FOREIGN KEYS FOR ZIP CODE PREFIXES!!!*/
+  AND p.physical_dimentions_integrity IS TRUE
+)
+GROUP BY order_id, order_item_id
+HAVING COUNT(*) > 1;

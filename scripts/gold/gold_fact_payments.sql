@@ -1,0 +1,1 @@
+-- continue with looking in the gemini chat history: Your logic is largely structurally sound for a production environment, but contains a fatal flaw in the customer dimension that will break entity tracking.

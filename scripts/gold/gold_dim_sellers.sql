@@ -10,3 +10,4 @@ CREATE OR REPLACE VIEW gold.dim_sellers AS (
     LEFT JOIN silver.olist_geolocation_dataset g  
       ON s.seller_zip_code_prefix = g.geolocation_zip_code_prefix
 );
+

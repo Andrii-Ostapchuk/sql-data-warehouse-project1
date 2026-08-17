@@ -14,8 +14,7 @@ CREATE OR REPLACE VIEW gold.dim_customers AS (
       ON c.customer_id = o.customer_id
   )
   SELECT
-    ra.customer_unique_id,
-    ra.customer_id,
+    ra.customer_unique_id AS customer_id,
     ra.customer_zip_code_prefix,
     ra.customer_city,
     ra.customer_state,
@@ -25,7 +24,7 @@ CREATE OR REPLACE VIEW gold.dim_customers AS (
   LEFT JOIN silver.olist_geolocation_dataset g
     ON g.geolocation_zip_code_prefix = ra.customer_zip_code_prefix
   WHERE ra.row_num = 1
-  ORDER BY ra.customer_unique_id
 );
+
 
 

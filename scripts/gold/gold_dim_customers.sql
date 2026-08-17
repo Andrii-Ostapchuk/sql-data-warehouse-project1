@@ -1,4 +1,4 @@
-CREATE VIEW gold.dim_customers AS (
+CREATE OR REPLACE VIEW gold.dim_customers AS (
   WITH relevant_addresses AS(
     SELECT
       c.customer_unique_id,

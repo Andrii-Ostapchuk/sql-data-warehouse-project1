@@ -1,1 +1,17 @@
--- continue with looking in the gemini chat history: Your logic is largely structurally sound for a production environment, but contains a fatal flaw in the customer dimension that will break entity tracking.
+CREATE OR REPLACE VIEW gold.fact_payments AS (
+  SELECT
+    p.order_id,
+    c.customer_unique_id,
+    p.payment_sequential,
+    p.payment_type,
+    p.payment_installments,
+    p.payment_value,
+    o.order_purchase_timestamp,
+    o.order_approved_at
+  FROM silver.olist_order_payments_dataset p
+  LEFT JOIN silver.olist_orders_dataset o
+    ON p.order_id = o.order_id
+  LEFT JOIN silver.olist_customers_dataset c
+    ON c.customer_id = o.customer_id
+  WHERE o.is_valid_date_sequence = TRUE
+);

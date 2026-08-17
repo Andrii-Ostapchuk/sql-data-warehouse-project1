@@ -1,4 +1,4 @@
-CREATE VIEW gold.fact_sales AS (
+CREATE OR REPLACE VIEW gold.fact_sales AS (
   SELECT
     i.order_id,
     c.customer_unique_id,

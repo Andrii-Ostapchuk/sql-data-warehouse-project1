@@ -173,8 +173,19 @@ VALUES
 
 SELECT *
 FROM bronze.olist_customers_dataset
-LIMIT 1000;
+
+
+
+UPDATE silver.product_category_name_translation
+SET product_category_name_english = 'home_comfort'
+WHERE product_category_name_english = 'home_confort';
+
+UPDATE silver.product_category_name_translation
+SET product_category_name_english = 'fashion_female_clothing'
+WHERE product_category_name_english = 'fashio_female_clothing';
 */
+
+
 TRUNCATE TABLE silver.product_category_name_translation;
 
 INSERT INTO silver.product_category_name_translation
